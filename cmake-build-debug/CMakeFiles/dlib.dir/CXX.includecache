@@ -1,0 +1,24 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+D:/new folder/dlib/Graph.cc
+Graph.h
+D:/new folder/dlib/Graph.h
+
+D:/new folder/dlib/Graph.h
+cmath
+-
+cstring
+-
+ctime
+-
+iostream
+-
+vector
+-
+
