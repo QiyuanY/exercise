@@ -14,6 +14,7 @@
 class Graph {
   int **a;
   int *arr;
+  float *ProMat;
   int dim;
   int state;
   std::vector<int> v;
@@ -22,9 +23,11 @@ class Graph {
  public:
   explicit Graph(int di, int sta, int &p_int);
   int RandomWalk();
-  static void SelectNode(int &node, float p);
+  void getProMatrix(int node);
+  void SelectNode(int &node);
   void print();
   void PrintMatrix();
+  float getPro(int node);
   int getMatrix(int x, int y);
 };
 
