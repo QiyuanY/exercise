@@ -6,7 +6,13 @@
 
 #IncludeRegexTransform: 
 
+D:/new folder/dlib/FileRead.h
+fstream
+-
+
 D:/new folder/dlib/Graph.cc
+random
+-
 Graph.h
 D:/new folder/dlib/Graph.h
 
@@ -20,5 +26,29 @@ ctime
 iostream
 -
 vector
+-
+map
+-
+
+D:/new folder/dlib/main.cpp
+iostream
+-
+cmath
+-
+cstring
+-
+FileRead.h
+D:/new folder/dlib/FileRead.h
+Graph.h
+D:/new folder/dlib/Graph.h
+iostream
+-
+vector
+-
+numeric
+-
+ctime
+-
+cstdlib
 -
 

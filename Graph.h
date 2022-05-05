@@ -10,6 +10,7 @@
 #include <ctime>
 #include <iostream>
 #include <vector>
+#include <map>
 
 class Graph {
   int **a;
@@ -17,12 +18,15 @@ class Graph {
   float *ProMat;
   int dim;
   int state;
+  std::vector<int> Count;
   std::vector<int> v;
+  std::map<int, float> Trans;
   ~Graph();
 
  public:
   explicit Graph(int di, int sta, int &p_int);
   int RandomWalk();
+  void SetCount();
   void getProMatrix(int node);
   void SelectNode(int &node);
   void print();

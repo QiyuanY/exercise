@@ -16,6 +16,7 @@ Graph::Graph(int di, int sta, int &p_int) {
     a[i] = arr + dim * i;
   }
   //free(arr);
+  SetCount();
 }
 Graph::~Graph() {
   free(a);
@@ -43,11 +44,11 @@ void Graph::SelectNode(int &node) {
   auto random = (float) (rand() % 100);
   random /= 100;
   float p = getPro(node);
-  if (random < p) {
+  //写个二分查找？
 
-  } else {
+  //占比 * 权重
+  *node  =
 
-  }
 }
 void Graph::PrintMatrix() {
   /*for (int i = 0; i < dim; i++) {
@@ -67,17 +68,31 @@ int Graph::getMatrix(int x, int y) {
   return a[x][y];
 }
 float Graph::getPro(int node) {
-  int count, num;
-  for (int i = 0; i < dim; i++) {
-    //std::cout << a[node][i] << std::endl;
-    if (0 < a[node][i]) {
-      num++;
-      count += a[node][i];
-    }
-  }
-  auto pro = (float) (count / num);
+
   return pro;
 }
 void Graph::getProMatrix(int node) {
-
+  int count = Count[node];
+  float tmp;
+  for (int i = 0; i < dim; i++) {
+    //std::cout << a[node][i] << std::endl;
+    if (0 < a[node][i]) {
+      tmp = (float) (a[node][i] / count);
+      Trans.insert(std::pair<int, float>(i, tmp));
+    }
+  }
+}
+void Graph::SetCount() {
+  for (int i = 0; i < dim; i++) {
+    int tmp = 0;
+    for (int j = 0; j < dim; j++) {
+      if (0 < a[i][j]) {
+        tmp += a[i][j];
+      }
+    }
+    Count.push_back(tmp);
+  }
+  /*for (auto &it:Count) {
+    std::cout << it << std::endl;
+  }*/
 }
