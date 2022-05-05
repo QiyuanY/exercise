@@ -3,9 +3,11 @@
 //
 
 #include <random>
+#include <list>
 #include "Graph.h"
 
 Graph::Graph(int di, int sta, int &p_int) {
+
   //a = (int *)malloc(sizeof(int) * dim);
   dim = di;
   memset(&arr, 0, sizeof(int *));
@@ -42,12 +44,20 @@ void Graph::SelectNode(int &node) {
   //std::default_random_engine e;
   srand((unsigned) time(nullptr));
   auto random = (float) (rand() % 100);
-  random /= 100;
+  random /= 100.0;
   float p = getPro(node);
-  //写个二分查找？
+  //写个二分查找？如何将权重与索引挂钩呢？
+  std::list<float> s;
+  int num = 0;
+  s.push_back(0.0);
+  while (num++) {
+    s.push_back(((float)a[node][num]/(float)Count[node]) + s.back());
+    if (num == node)
+      continue;
+  }
 
   //占比 * 权重
-  *node  =
+  node =
 
 }
 void Graph::PrintMatrix() {
