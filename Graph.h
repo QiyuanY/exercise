@@ -20,18 +20,19 @@ class Graph {
   int state;
   std::vector<int> Count;
   std::vector<int> v;
-  std::map<int, float> Trans;
+  std::map<int, std::vector<float>> Trans; //转移概率表
   ~Graph();
 
  public:
   explicit Graph(int di, int sta, int &p_int);
   int RandomWalk();
+  bool IsIn(int num, int n);
   void SetCount();
-  void getProMatrix(int node);
+  void getProMatrix();
   void SelectNode(int &node);
   void print();
   void PrintMatrix();
-  float getPro(int node);
+  std::vector<float> getPro(int node);
   int getMatrix(int x, int y);
 };
 

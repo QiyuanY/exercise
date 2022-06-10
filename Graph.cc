@@ -4,6 +4,7 @@
 
 #include <random>
 #include <list>
+#include <map>
 #include "Graph.h"
 
 Graph::Graph(int di, int sta, int &p_int) {
@@ -11,55 +12,85 @@ Graph::Graph(int di, int sta, int &p_int) {
   //a = (int *)malloc(sizeof(int) * dim);
   dim = di;
   memset(&arr, 0, sizeof(int *));
-  state = sta;
-  arr = &p_int;
-  a = (int **) malloc(sizeof(arr) * di);
+  state = sta; //转移次数
+  arr = &p_int;//邻接矩阵（不区分有向图或者无向图）
+  a = (int **) malloc(sizeof(arr) * di); //a是为了方便使用索引访问图
   for (int i = 0; i < di; i++) {
     a[i] = arr + dim * i;
   }
   //free(arr);
-  SetCount();
+  SetCount(); //各节点相邻节点个数
+  getProMatrix(); //根据权重所得的转移概率表
 }
 Graph::~Graph() {
   free(a);
 }
+
+/***
+ * 根据图的有向边权重产生的随机游走通路
+ * @return
+ */
 int Graph::RandomWalk() {
   //float prob = 0.0;
   int num = 0;
   int current = 0;
-  v.push_back(current);
-  while (num < state) {
-    SelectNode(current);
-    v.push_back(current);
+  v.push_back(current); //将起始节点存入通路容器v
+  while (num < state) { //统计当前通路长度num 和指定长度state
+    SelectNode(current); //选择一个节点，并将下一跳的节点通过指针传递的方式传回
+    v.push_back(current); //将下一跳的节点存入容器v
     num++;
   }
   return 0;
 }
+
+/***
+ * 遍历通路v
+ */
 void Graph::print() {
   for (auto &it : v) {
     std::cout << it << std::endl;
   }
 }
+
+/***
+ * 根据当前节点得到下一跳节点
+ * @param node 传入时是当前节点，最终为下一跳节点
+ */
 void Graph::SelectNode(int &node) {
   //std::default_random_engine e;
   srand((unsigned) time(nullptr));
-  auto random = (float) (rand() % 100);
-  random /= 100.0;
-  float p = getPro(node);
-  //写个二分查找？如何将权重与索引挂钩呢？
-  std::list<float> s;
-  int num = 0;
-  s.push_back(0.0);
-  while (num++) {
-    s.push_back(((float)a[node][num]/(float)Count[node]) + s.back());
-    if (num == node)
-      continue;
-  }
-
-  //占比 * 权重
-  node =
+  auto random = (rand() % 100);
+//  random /= 100.0;
+  int cnt = 0;
+  float total;
+  printf("%.2f\n", random);
+  int NodeAdj = 1; //当前节点相邻节点个数计数
+  while (NodeAdj <= Count[node])
+    if (IsIn(random, NodeAdj))
+      node = NodeAdj; //等于random所在范围对应的节点序号
+//  while (random > total) {
+//    total += Trans[node][cnt++];
+//  }
+//  auto p = cnt;
+//  //写个二分查找？如何将权重与索引挂钩呢？
+//  std::list<float> s;
+//  int num = 0;
+//  s.push_back(0.0);
+//  while (num++) {
+//    s.push_back(((float) a[node][num] / (float) Count[node]) + s.back());
+//    if (num == node)
+//      continue;
+//  }
+//
+//  //占比 * 权重
+//  node = cnt;
+//  std::cout << node << std::endl;
 
 }
+
+/***
+ * 以邻接矩阵的方式打印图
+ */
 void Graph::PrintMatrix() {
   /*for (int i = 0; i < dim; i++) {
     for (int j = 0; j < dim; j++) {
@@ -74,24 +105,48 @@ void Graph::PrintMatrix() {
     std::cout << std::endl;
   }
 }
+
+/***
+ *
+ * @param x 矩阵行索引
+ * @param y 矩阵列索引
+ * @return 返回a[x][y]所对应的元素
+ */
 int Graph::getMatrix(int x, int y) {
   return a[x][y];
 }
-float Graph::getPro(int node) {
 
-  return pro;
-}
-void Graph::getProMatrix(int node) {
-  int count = Count[node];
-  float tmp;
+/***
+ *
+ * @param node
+ * @return
+ */
+std::vector<float> Graph::getPro(int node) {
+  std::vector<float> t;
+  auto total = (float) Count[node];
   for (int i = 0; i < dim; i++) {
-    //std::cout << a[node][i] << std::endl;
-    if (0 < a[node][i]) {
-      tmp = (float) (a[node][i] / count);
-      Trans.insert(std::pair<int, float>(i, tmp));
-    }
+    auto pro_t = (float) ((float) getMatrix(node, i) / total);
+    //std::cout << node << "with" << i << ":pro:" << pro_t << " ";
+    t.push_back(pro_t);
+  }
+  //std::cout << std::endl;
+  return t;
+}
+
+/***
+ * 初始化了转移概率矩阵
+ */
+void Graph::getProMatrix() {
+  std::cout << "Get an initial Probility" << std::endl;
+  for (int i = 0; i < dim; i++) {
+    auto ProM = getPro(i);
+    Trans.insert(std::pair<int, std::vector<float>>(i, ProM));
   }
 }
+
+/***
+ * 统计每个节点所连接的点的个数，并存入count容器中
+ */
 void Graph::SetCount() {
   for (int i = 0; i < dim; i++) {
     int tmp = 0;
@@ -105,4 +160,19 @@ void Graph::SetCount() {
   /*for (auto &it:Count) {
     std::cout << it << std::endl;
   }*/
+}
+
+/***
+ * 判断num是否在某个容器中
+ * @param num 所要判断的元素
+ * @return 存在返回真，否则为假
+ */
+bool Graph::IsIn(int num, int n) {
+  for (int (i) = 0; (i) < Count[num]; ++(i)) {
+    std::map<int, int>tmp = Trans[i];
+    auto t = std::pair<int, int>(Trans[], 2);
+    if (num >= t.first && num < t.second)
+      return true;
+  }
+  return false;
 }

@@ -141,33 +141,6 @@ dlib/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\dlib.dir\build.make CMakeFiles/dlib.dir/build
 .PHONY : dlib/fast
 
-FileRead.obj: FileRead.cc.obj
-
-.PHONY : FileRead.obj
-
-# target to build an object file
-FileRead.cc.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\dlib.dir\build.make CMakeFiles/dlib.dir/FileRead.cc.obj
-.PHONY : FileRead.cc.obj
-
-FileRead.i: FileRead.cc.i
-
-.PHONY : FileRead.i
-
-# target to preprocess a source file
-FileRead.cc.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\dlib.dir\build.make CMakeFiles/dlib.dir/FileRead.cc.i
-.PHONY : FileRead.cc.i
-
-FileRead.s: FileRead.cc.s
-
-.PHONY : FileRead.s
-
-# target to generate assembly for a file
-FileRead.cc.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\dlib.dir\build.make CMakeFiles/dlib.dir/FileRead.cc.s
-.PHONY : FileRead.cc.s
-
 Graph.obj: Graph.cc.obj
 
 .PHONY : Graph.obj
@@ -231,9 +204,6 @@ help:
 	@echo ... edit_cache
 	@echo ... rebuild_cache
 	@echo ... dlib
-	@echo ... FileRead.obj
-	@echo ... FileRead.i
-	@echo ... FileRead.s
 	@echo ... Graph.obj
 	@echo ... Graph.i
 	@echo ... Graph.s

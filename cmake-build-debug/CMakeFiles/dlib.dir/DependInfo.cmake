@@ -4,7 +4,6 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "D:/new folder/dlib/FileRead.cc" "D:/new folder/dlib/cmake-build-debug/CMakeFiles/dlib.dir/FileRead.cc.obj"
   "D:/new folder/dlib/Graph.cc" "D:/new folder/dlib/cmake-build-debug/CMakeFiles/dlib.dir/Graph.cc.obj"
   "D:/new folder/dlib/main.cpp" "D:/new folder/dlib/cmake-build-debug/CMakeFiles/dlib.dir/main.cpp.obj"
   )

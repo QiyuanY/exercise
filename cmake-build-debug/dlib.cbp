@@ -80,12 +80,6 @@
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="D:/new folder/dlib/FileRead.cc">
-			<Option target="dlib"/>
-		</Unit>
-		<Unit filename="D:/new folder/dlib/FileRead.h">
-			<Option target="dlib"/>
-		</Unit>
 		<Unit filename="D:/new folder/dlib/Graph.cc">
 			<Option target="dlib"/>
 		</Unit>

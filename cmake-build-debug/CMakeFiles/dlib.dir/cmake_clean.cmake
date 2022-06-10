@@ -1,5 +1,4 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/dlib.dir/FileRead.cc.obj"
   "CMakeFiles/dlib.dir/Graph.cc.obj"
   "CMakeFiles/dlib.dir/main.cpp.obj"
   "dlib.exe"

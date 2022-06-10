@@ -3,4 +3,4 @@ project(dlib)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(dlib  Graph.h Graph.cc FileRead.cc FileRead.h main.cpp)
+add_executable(dlib Graph.cc Graph.h main.cpp)
