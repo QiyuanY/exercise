@@ -3,8 +3,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/dlib.dir/main.cpp.obj"
   "dlib.exe"
   "dlib.exe.manifest"
+  "dlib.lib"
   "dlib.pdb"
-  "libdlib.dll.a"
 )
 
 # Per-language clean rules from dependency scanning.

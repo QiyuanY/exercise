@@ -19,8 +19,10 @@ Graph::Graph(int di, int sta, int &p_int) {
     a[i] = arr + dim * i;
   }
   //free(arr);
-  SetCount(); //各节点相邻节点个数
+  SetCount(); //各节点相邻节点之和及节点个数
   getProMatrix(); //根据权重所得的转移概率表
+  TransProMatrix();
+  getProArea(); //获得各节点概率转移区域（1-100）
 }
 Graph::~Graph() {
   free(a);
@@ -64,10 +66,10 @@ void Graph::SelectNode(int &node) {
   int cnt = 0;
   float total;
   printf("%.2f\n", random);
-  int NodeAdj = 1; //当前节点相邻节点个数计数
-  while (NodeAdj <= Count[node])
-    if (IsIn(random, NodeAdj))
-      node = NodeAdj; //等于random所在范围对应的节点序号
+//  int NodeAdj = 1; //当前节点相邻节点个数计数
+//  while (NodeAdj <= dim)
+//    if (IsIn(random, NodeAdj))
+//      node = NodeAdj; //等于random所在范围对应的节点序号
 //  while (random > total) {
 //    total += Trans[node][cnt++];
 //  }
@@ -126,7 +128,7 @@ std::vector<float> Graph::getPro(int node) {
   auto total = (float) Count[node];
   for (int i = 0; i < dim; i++) {
     auto pro_t = (float) ((float) getMatrix(node, i) / total);
-    //std::cout << node << "with" << i << ":pro:" << pro_t << " ";
+    //std::cout << node << "with " << i << " :pro: " << pro_t << " "<<std::endl;
     t.push_back(pro_t);
   }
   //std::cout << std::endl;
@@ -149,10 +151,11 @@ void Graph::getProMatrix() {
  */
 void Graph::SetCount() {
   for (int i = 0; i < dim; i++) {
-    int tmp = 0;
+    int tmp = 0, cnt = 0;
     for (int j = 0; j < dim; j++) {
       if (0 < a[i][j]) {
         tmp += a[i][j];
+//        cnt++;
       }
     }
     Count.push_back(tmp);
@@ -168,11 +171,50 @@ void Graph::SetCount() {
  * @return 存在返回真，否则为假
  */
 bool Graph::IsIn(int num, int n) {
-  for (int (i) = 0; (i) < Count[num]; ++(i)) {
-    std::map<int, int>tmp = Trans[i];
-    auto t = std::pair<int, int>(Trans[], 2);
-    if (num >= t.first && num < t.second)
-      return true;
-  }
+//  for (int (i) = 0; (i) < dim; ++(i)) {
+//
+//    auto t = std::pair<int, int>(Trans[], 2);
+//    if (num >= t.first && num < t.second)
+//      return true;
+//  }
   return false;
+}
+
+/***
+ * 输出概率转换矩阵
+ */
+void Graph::TransProMatrix() {
+  for (auto &it: Trans) {
+   std::cout<<it.first<<" ";
+   for (auto &item :it.second){
+     std::cout<<item<<" ";
+   }
+   std::cout<<std::endl;
+ }
+}
+
+/***
+ * 获得一个 dim * dim 维度的二元组矩阵
+ * 其中每个二元组代表节点 i -> j的概率区域（区域为1-100）
+ */
+void Graph::getProArea() {
+  printf("Initial a ProArea\n");
+  for (int i = 0; i < dim; ++i) {
+    int left = 0, right = 0;
+    std::vector<std::pair<int, int>>t;
+    right = (int)(Trans[i][0] * 100.0);
+    for (int j = 0; j < dim; ++j) {
+      left = right; //左边界
+      right += (int)(Trans[i][j] * 100.0); //右边界
+      t.push_back(std::pair<int, int>(left, right)); //一个二元组
+    }
+    Area.push_back(t); //一个节点对应的二元组列表被存入
+  }
+  for(auto &it:Area) {
+    for (auto &item:it){
+      std::cout<<item.first<<"----"<<item.second;
+      std::cout<<std::endl;
+    }
+    std::cout<<std::endl;
+  }
 }

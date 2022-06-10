@@ -16,10 +16,9 @@ int main() {
   //auto handle = new FileRead(fileName);
   auto *g = new Graph(n, 2, *InitMatrix);//指针调用
   //g->PrintMatrix();
-  //g->SetCount();
 //  g->RandomWalk();
   //g->print();
-  g->getProMatrix();
+//  g->getProMatrix();
   return 0;
 }
 

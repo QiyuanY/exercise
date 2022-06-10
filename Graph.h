@@ -10,6 +10,7 @@
 #include <ctime>
 #include <iostream>
 #include <vector>
+#include <array>
 #include <map>
 
 class Graph {
@@ -20,6 +21,7 @@ class Graph {
   int state;
   std::vector<int> Count;
   std::vector<int> v;
+  std::vector<std::vector<std::pair<int,int>>>Area;
   std::map<int, std::vector<float>> Trans; //转移概率表
   ~Graph();
 
@@ -29,9 +31,11 @@ class Graph {
   bool IsIn(int num, int n);
   void SetCount();
   void getProMatrix();
+  void getProArea();
   void SelectNode(int &node);
   void print();
   void PrintMatrix();
+  void TransProMatrix();
   std::vector<float> getPro(int node);
   int getMatrix(int x, int y);
 };
