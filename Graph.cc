@@ -62,14 +62,11 @@ void Graph::SelectNode(int &node) {
   //std::default_random_engine e;
   srand((unsigned) time(nullptr));
   auto random = (rand() % 100);
-//  random /= 100.0;
-  int cnt = 0;
-  float total;
   printf("%.2f\n", random);
-//  int NodeAdj = 1; //当前节点相邻节点个数计数
-//  while (NodeAdj <= dim)
-//    if (IsIn(random, NodeAdj))
-//      node = NodeAdj; //等于random所在范围对应的节点序号
+  int NodeAdj = 1; //当前节点相邻节点个数计数
+  while (NodeAdj <= dim)
+    if (IsIn(random, NodeAdj))
+      node = NodeAdj; //等于random所在范围对应的节点序号
 //  while (random > total) {
 //    total += Trans[node][cnt++];
 //  }
@@ -171,12 +168,12 @@ void Graph::SetCount() {
  * @return 存在返回真，否则为假
  */
 bool Graph::IsIn(int num, int n) {
-//  for (int (i) = 0; (i) < dim; ++(i)) {
-//
-//    auto t = std::pair<int, int>(Trans[], 2);
-//    if (num >= t.first && num < t.second)
-//      return true;
-//  }
+  for (int (i) = 0; (i) < dim; ++(i)) {
+
+    auto t = Area[n][i];
+    if (num >= t.first && num < t.second)
+      return true;
+  }
   return false;
 }
 
@@ -199,22 +196,25 @@ void Graph::TransProMatrix() {
  */
 void Graph::getProArea() {
   printf("Initial a ProArea\n");
+  std::vector<std::pair<int, int>>t;
+  int left = 0, right = 0;
   for (int i = 0; i < dim; ++i) {
-    int left = 0, right = 0;
-    std::vector<std::pair<int, int>>t;
+    left = right = 0;
     right = (int)(Trans[i][0] * 100.0);
-    for (int j = 0; j < dim; ++j) {
+    t.emplace_back(left, right);
+    for (int j = 0; j < dim-1; ++j) {
       left = right; //左边界
-      right += (int)(Trans[i][j] * 100.0); //右边界
-      t.push_back(std::pair<int, int>(left, right)); //一个二元组
+      right += (int)(Trans[i][j+1] * 100.0); //右边界
+      t.emplace_back(left, right); //一个二元组
     }
     Area.push_back(t); //一个节点对应的二元组列表被存入
+    t.clear();
   }
-  for(auto &it:Area) {
+  /*for(auto &it:Area) {
     for (auto &item:it){
       std::cout<<item.first<<"----"<<item.second;
       std::cout<<std::endl;
     }
     std::cout<<std::endl;
-  }
+  }*/
 }
